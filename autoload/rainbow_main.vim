@@ -84,27 +84,28 @@ fun s:lcm(a, b)
 endfun
 
 fun rainbow_main#gen_config(ft)
-	let g = exists('g:rainbow_conf')? g:rainbow_conf : {}
-	"echom 'g:rainbow_conf:' string(g)
-	let s = get(g, 'separately', {})
-	"echom 'g:rainbow_conf.separately:' string(s)
-	let dft_conf = extend(copy(s:rainbow_conf), g) | unlet dft_conf.separately
-	"echom 'default config options:' string(dft_conf)
-	let dx_conf = s:rainbow_conf.separately['*']
-	"echom 'default star config:' string(dx_conf)
-	let ds_conf = get(s:rainbow_conf.separately, a:ft, dx_conf)
-	"echom 'default separately config:' string(ds_conf)
-	let ux_conf = get(s, '*', ds_conf)
-	"echom 'user star config:' string(ux_conf)
-	let us_conf = get(s, a:ft, ux_conf)
-	"echom 'user separately config:' string(us_conf)
-	let af_conf = (s:eq(us_conf, 'default') ? ds_conf : us_conf)
-	"echom 'almost finally config:' string(af_conf)
-	if s:eq(af_conf, 0)
+	let usr_conf = get(g:, 'rainbow_conf', {})
+	" Default conf
+	let dft_conf = extendnew(s:rainbow_conf, usr_conf)
+	unlet dft_conf.separately
+	" Different separately conf
+	let usrsep = get(usr_conf, 'separately', {})
+	let defsep = s:rainbow_conf.separately
+	" Fallback conf
+	let fbk_conf = get(defsep, a:ft) ?? defsep['*']
+	let spc_conf = get(usrsep, a:ft) ?? get(usrsep, '*', 'default')
+	let fin_conf = s:eq(spc_conf, 'default') ? fbk_conf : spc_conf
+	if s:eq(fin_conf, 0)
 		return 0
 	else
-		let conf = extend(extend({'syn_name_prefix': substitute(a:ft, '\v\A+(\a)', '\u\1', 'g').'Rainbow'}, dft_conf), af_conf)
-		let conf.cycle = (has('gui_running') || (has('termguicolors') && &termguicolors)) ? s:lcm(len(conf.guifgs), len(conf.guis)) : s:lcm(len(conf.ctermfgs), len(conf.cterms))
+		let conf = { 'syn_name_prefix': substitute(a:ft, '\v\A+(\a)', '\u\1', 'g').'Rainbow' }
+					\ ->extend(dft_conf)->extend(fin_conf)
+		if conf->has_key('inherit')
+			let conf.inherit = (type(conf.inherit) == v:t_string ? [conf.inherit] : conf.inherit)
+						\ ->mapnew('rainbow_main#gen_config(v:val)')
+		endif
+		let conf.cycle = (has('gui_running') || (has('termguicolors') && &termguicolors)) ?
+					\ s:lcm(len(conf.guifgs), len(conf.guis)) : s:lcm(len(conf.ctermfgs), len(conf.cterms))
 		return conf
 	endif
 endfun
@@ -138,3 +139,4 @@ fun rainbow_main#toggle()
 	endif
 endfun
 
+" vim: noet

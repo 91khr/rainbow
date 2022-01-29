@@ -59,6 +59,10 @@ fun rainbow#syn(config)
 	let prefix = conf.syn_name_prefix
 	let cycle = conf.cycle
 
+	for upper in conf->get('inherit', [])
+		call rainbow#syn(upper)
+	endfor
+
 	let glob_paran_opts = s:resolve_parenthesis_from_config(conf)
 	let b:rainbow_loaded = cycle
 	let cluster_list = {}
@@ -102,7 +106,10 @@ fun rainbow#syn(config)
 			exe 'syn cluster '.prefix.kind.'_'.cluster.' contains='.
 						\ map(range(cycle), '"@".s:synGroupID(prefix, kind, v:val, cluster)')->join(',')
 		endfor
-		exe 'syn cluster '.prefix.kind.' contains='.map(keys(cluster_list), 'prefix.kind."_".v:val')->join(',')
+		let totlist = map(keys(cluster_list), 'prefix.kind."_".v:val')->join(',')
+		if !!totlist
+			exe 'syn cluster '.prefix.kind.' contains='.totlist
+		endif
 	endfor
 
 	for cmd in conf->get('after', [])
@@ -113,6 +120,10 @@ endfun
 fun rainbow#syn_clear(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
+
+	for upper in conf->get('inherit', [])
+		call rainbow#syn_clear(upper)
+	endfor
 
 	for id in range(len(conf.parentheses))
 		for lv in range(conf.cycle)
@@ -126,6 +137,10 @@ endfun
 fun rainbow#hi(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
+
+	for upper in conf->get('inherit', [])
+		call rainbow#hi(upper)
+	endfor
 
 	for id in range(len(conf.parentheses))
 		for lv in range(conf.cycle)
@@ -145,6 +160,10 @@ fun rainbow#hi_clear(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
 
+	for upper in conf->get('inherit', [])
+		call rainbow#hi_clear(upper)
+	endfor
+
 	for id in range(len(conf.parentheses))
 		for lv in range(conf.cycle)
 			let [pid, oid] = [s:synID(prefix, 'p', lv, id), s:synID(prefix, 'o', lv, id)]
@@ -154,3 +173,4 @@ fun rainbow#hi_clear(config)
 	endfor
 endfun
 
+" vim: noet

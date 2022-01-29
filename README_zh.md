@@ -98,6 +98,10 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 - 'separately': 针对文件类型(由&ft决定)作不同的配置,未被单独设置的文件类型使用`*`下的配置,值为`0`表示仅对该类型禁用插件,值为`"default"`表示使用针对该类型的默认兼容配置 (注意, 默认兼容配置可能随着该插件版本的更新而改变, 如果你不希望它改变, 那么你应该将它拷贝一份放到你的vimrc文件里).
 - 省略某个字段以使用默认设置
 
+在 'separately' 的列表里, 可以用 'inherit' 来定义在应用当前文件类型的配置之前需要应用的配置,
+这一字段可以是一个指示了文件类型的字符串, 也可以是一个文件类型的字符串列表.
+可以用 `'*'` 来引用 'separately' 中的这一配置, 也可以用 `''` 来引用默认的配置.
+
 #### `parentheses`的语法
 
 每一种括号的定义包含形如以下的部分:  `start=/(/`, `step=/,/`, `stop=/)/`, `fold`, `contained`, `containedin=someSynNames`, `contains=@Spell`, `cluster=someNames`. 其中, `start`, `stop`, `fold`, `contained`, `containedin` 和 `contains` 的具体含义可参考 `:h syntax`; `step` 和 `cluster` 为本插件的扩展定义. `step` 是一个正则, 匹配括号中间需要高亮的运算符. `cluster` 是一个用逗号分隔的列表 (和 `containedin` 类似), 指定了这种括号所属的括号组, 默认的括号组名称为 `default`, 也可以将它显式放在括号组名称的列表中.

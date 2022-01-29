@@ -114,6 +114,10 @@ let g:rainbow_conf = {
 - 'after': execute some vim commands after the rainbow syntax rules is defined. it is often used like `['syn clear xxx']` to solve [3rd-party-plugin-compatibility]() problems.
 - keep a field empty to use the default setting.
 
+In 'separately', 'inherit' can be used to specify rules to apply before applying current rule;
+it can be a single string specifying the filetype, or a list of filetype strings,
+where `'*'` stands for the `'*'` configuration in 'separately', `''` stands for the default configuration.
+
 To get more advanced config examples, try to search throught this [tag](https://github.com/luochen1990/rainbow/issues?utf8=%E2%9C%93&q=label%3A%22config+reference%22+).
 
 #### Syntax for `parentheses` definition
