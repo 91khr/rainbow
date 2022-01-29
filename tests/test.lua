@@ -7,6 +7,5 @@
     (function() return 0 end)()] = 1
 end)("blah")
 
-[[
-Special lua string...
-]]
+[===[ Lua long bracket string...  ]===]
+[[ Another long bracket string ]]
