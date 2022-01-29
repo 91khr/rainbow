@@ -8,7 +8,7 @@ let s:rainbow_conf = {
 \	'operators': '_,_',
 \	'contains_prefix': 'TOP',
 \	'parentheses_options': '',
-\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\	'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/'],
 \	'separately': {
 \		'*': {},
 \		'markdown': {
@@ -54,6 +54,10 @@ let s:rainbow_conf = {
 \		},
 \		'stylus': {
 \			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'],
+\		},
+\		'zsh': {
+\			'parentheses': ['start=/{/ end=/}/', 'start=/\[/ end=/]/', 'start=/\V[[/ end=/]]/',
+\				'start=/(/ end=/)/ contained containedin=zshMathSubst'],
 \		},
 \		'css': 0,
 \		'sh': 0,
