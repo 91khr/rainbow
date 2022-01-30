@@ -42,7 +42,7 @@ let s:rainbow_conf = {
 \			'parentheses': ['start=/\v\<((script|style|area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
 \		},
 \		'lua': {
-\			'parentheses': ['start=/(/ end=/)/', 'start=/{/ end=/}/', 'start=/\v\[\ze($|!(\=*\[))/ end=/\]/'],
+\			'parentheses': ['start=/(/ end=/)/', 'start=/{/ end=/}/', 'start=/\v\[%(\=*\[)@!/ end=/\]/'],
 \		},
 \		'perl': {
 \			'syn_name_prefix': 'perlBlockFoldRainbow',
@@ -57,7 +57,8 @@ let s:rainbow_conf = {
 \		},
 \		'zsh': {
 \			'parentheses': ['start=/{/ end=/}/', 'start=/\[/ end=/]/', 'start=/\V[[/ end=/]]/',
-\				'start=/(/ end=/)/ contained containedin=zshMathSubst'],
+\				'start=/(/ end=/)/ contained containedin=zshMathSubst',
+\				'start=/((/ end=/))/'],
 \		},
 \		'css': 0,
 \		'sh': 0,

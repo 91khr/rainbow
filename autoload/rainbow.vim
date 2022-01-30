@@ -107,7 +107,7 @@ fun rainbow#syn(config)
 						\ map(range(cycle), '"@".s:synGroupID(prefix, kind, v:val, cluster)')->join(',')
 		endfor
 		let totlist = map(keys(cluster_list), 'prefix.kind."_".v:val')->join(',')
-		if !!totlist
+		if !empty(totlist)
 			exe 'syn cluster '.prefix.kind.' contains='.totlist
 		endif
 	endfor

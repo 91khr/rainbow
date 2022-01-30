@@ -6,6 +6,10 @@
     lst[
     (function() return 0 end)()] = 1
 end)("blah")
+(((( ))))
+[ [ [ ] ] ]
+
+(if then  (  ) {  } end)
 
 [===[ Lua long bracket string...  ]===]
 [[ Another long bracket string ]]
