@@ -62,6 +62,7 @@ let s:rainbow_conf = {
 \		},
 \		'css': 0,
 \		'sh': 0,
+\		'help': 0,
 \		'vimwiki': 0,
 \	}
 \}
@@ -93,8 +94,8 @@ fun rainbow_main#gen_config(ft)
 	let usrsep = get(usr_conf, 'separately', {})
 	let defsep = s:rainbow_conf.separately
 	" Fallback conf
-	let fbk_conf = get(defsep, a:ft) ?? defsep['*']
-	let spc_conf = get(usrsep, a:ft) ?? get(usrsep, '*', 'default')
+	let fbk_conf = get(defsep, a:ft, defsep['*'])
+	let spc_conf = get(usrsep, a:ft, get(usrsep, '*', 'default'))
 	let fin_conf = s:eq(spc_conf, 'default') ? fbk_conf : spc_conf
 	if s:eq(fin_conf, 0)
 		return 0
@@ -116,6 +117,9 @@ fun rainbow_main#gen_configs(ft)
 endfun
 
 fun rainbow_main#load()
+	if exists("b:rainbow_confs")
+		call rainbow_main#clear()
+	endif
 	let b:rainbow_confs = rainbow_main#gen_configs(&filetype)
 	for conf in b:rainbow_confs
 		call rainbow#syn(conf)
