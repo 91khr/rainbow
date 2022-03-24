@@ -96,6 +96,7 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 - 'operators': 描述你希望哪些运算符跟着与它同级的括号一起高亮(注意：留意需要转义的特殊字符，更多样例见[这里](https://github.com/luochen1990/rainbow/issues/3), 你也可以读[vim帮助 :syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern))
 - 'parentheses': 一个关于括号定义的列表, 其中的每个项目描述了一种括号, 具体的语法见[parentheses的语法]()
 - 'separately': 针对文件类型(由&ft决定)作不同的配置,未被单独设置的文件类型使用`*`下的配置,值为`0`表示仅对该类型禁用插件,值为`"default"`表示使用针对该类型的默认兼容配置 (注意, 默认兼容配置可能随着该插件版本的更新而改变, 如果你不希望它改变, 那么你应该将它拷贝一份放到你的vimrc文件里).
+- 'inherit': 指定应该在当前配置之前先加载的配置, 也即当前配置应该继承的配置. *注意*: 如果想要完全采用另一个配置, 应该同时把'parentheses'设置成空列表, 否则'parentheses'仍然会读取默认配置.
 - 省略某个字段以使用默认设置
 
 在 'separately' 的列表里, 可以用 'inherit' 来定义在应用当前文件类型的配置之前需要应用的配置,

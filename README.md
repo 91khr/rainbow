@@ -112,6 +112,7 @@ let g:rainbow_conf = {
 - 'separately': configure for specific filetypes (decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files, value `"default"` means keep the default shim for this filetype (notice: the default shim config will change between plugin version).
 - 'syn_name_prefix': add a prefix to name of the syntax definition, this option is often used to solve [3rd-party-plugin-compatibility]() problems.
 - 'after': execute some vim commands after the rainbow syntax rules is defined. it is often used like `['syn clear xxx']` to solve [3rd-party-plugin-compatibility]() problems.
+- 'inherit': which config should be loaded before current config, i.e. which config current config should inherit. *Note* that if the config should completely inherit from another config, its 'parentheses' option should be set to empty list, or the default config would still be loaded.
 - keep a field empty to use the default setting.
 
 In 'separately', 'inherit' can be used to specify rules to apply before applying current rule;
